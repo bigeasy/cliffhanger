@@ -1,0 +1,32 @@
+{
+    "name":             "cliffhanger",
+    "version":          "9.9.9",
+    "author":           "Alan Gutierrez <alan@prettyrobots.com>",
+    "description":      "Description.",
+    "keywords":
+    [
+                        "queue", "events"
+    ],
+    "contributors":     [],
+    "homepage":         "https://github.com/bigeasy/cliffhanger",
+    "bugs":             "https://github.com/bigeasy/cliffhanger/issues",
+    "license":          "MIT",
+    "main":             "cliffhanger",
+    "repository":
+    {
+                        "type": "git",
+                        "url": "http://github.com/bigeasy/cliffhanger.git"
+    },
+    "dependencies":
+    {
+                        "cadence":              "0.4.2"
+    },
+    "devDependencies":
+    {
+                        "proof":                "0.0.56"
+    },
+    "scripts":
+    {
+                        "test": "proof platform win32 && proof test */*/*.t.js || t/test"
+    }
+}
