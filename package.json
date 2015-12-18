@@ -19,11 +19,13 @@
     },
     "dependencies":
     {
-                        "cadence":              "0.4.2"
+                        "cadence":              "0.4.3",
+                        "magazine":             "0.0.16",
+                        "monotonic":            "0.0.3"
     },
     "devDependencies":
     {
-                        "proof":                "0.0.56"
+                        "proof":                "0.0.57"
     },
     "scripts":
     {
