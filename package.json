@@ -20,7 +20,7 @@
     "dependencies":
     {
                         "cadence":              "0.4.3",
-                        "interrupt":            "0.0.10",
+                        "interrupt":            "1.0.x",
                         "magazine":             "0.0.17",
                         "monotonic":            "1.0.x"
     },
