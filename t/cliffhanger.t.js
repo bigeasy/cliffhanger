@@ -2,7 +2,7 @@ require('proof')(2, prove)
 
 function prove (assert) {
     var Cache = require('magazine')
-    var Cliffhanger = require('../..')
+    var Cliffhanger = require('..')
     new Cliffhanger
     var now = 0
     var cliffhanger = new Cliffhanger(new Cache({ Date: { now: function () { return now } } }))
