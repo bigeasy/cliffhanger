@@ -1,35 +1,35 @@
 {
-    "name":             "cliffhanger",
-    "version":          "1.0.1",
-    "author":           "Alan Gutierrez <alan@prettyrobots.com>",
-    "description":      "Description.",
+    "name":                 "cliffhanger",
+    "version":              "1.0.1",
+    "description":          "Description.",
     "keywords":
     [
-                        "queue", "events"
+                            "queue", "events"
     ],
-    "contributors":     [],
-    "homepage":         "https://github.com/bigeasy/cliffhanger",
-    "bugs":             "https://github.com/bigeasy/cliffhanger/issues",
-    "license":          "MIT",
-    "main":             "cliffhanger",
+    "author":               "Alan Gutierrez <alan@prettyrobots.com>",
+    "contributors":         [],
+    "homepage":             "https://github.com/bigeasy/cliffhanger",
+    "bugs":                 "https://github.com/bigeasy/cliffhanger/issues",
+    "license":              "MIT",
     "repository":
     {
-                        "type": "git",
-                        "url": "http://github.com/bigeasy/cliffhanger.git"
+                            "type": "git",
+                            "url": "http://github.com/bigeasy/cliffhanger.git"
     },
     "dependencies":
     {
-                        "cadence":              "1.x",
-                        "interrupt":            "1.x",
-                        "magazine":             "1.x",
-                        "monotonic":            "1.x"
+                            "cadence":              "1.x",
+                            "interrupt":            "1.x",
+                            "magazine":             "1.x",
+                            "monotonic":            "1.x"
     },
     "devDependencies":
     {
-                        "proof":                "1.x"
+                            "proof":                "1.x"
     },
+    "main":                 "cliffhanger",
     "scripts":
     {
-                        "test": "proof platform win32 && proof test */*/*.t.js || t/test"
+                            "test": "proof platform win32 && proof test */*/*.t.js || t/test"
     }
 }
