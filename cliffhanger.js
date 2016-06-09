@@ -15,9 +15,13 @@ Cliffhanger.prototype.invoke = function (callback) {
 }
 
 Cliffhanger.prototype.resolve = function (cookie, vargs) {
-    var cartridge = this._magazine.hold(cookie, {})
-    cartridge.value.callback.apply(null, vargs)
+    var cartridge = this._magazine.hold(cookie, null), outcome = false
+    if (cartridge.value != null) {
+        cartridge.value.callback.apply(null, vargs)
+        outcome = true
+    }
     cartridge.remove()
+    return outcome
 }
 
 Cliffhanger.prototype.expire = function (expired) {
