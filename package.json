@@ -1,10 +1,12 @@
 {
     "name":                 "cliffhanger",
     "version":              "1.0.1",
-    "description":          "Description.",
+    "description":
+        "A continuation system for converting queued events into error-first callback functions.",
     "keywords":
     [
-                            "queue", "events"
+                            "queue", "events", "callback", "control", "flow",
+                            "cadence"
     ],
     "author":               "Alan Gutierrez <alan@prettyrobots.com>",
     "contributors":         [],
