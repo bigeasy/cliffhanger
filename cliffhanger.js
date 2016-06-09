@@ -10,7 +10,7 @@ function Cliffhanger (cache) {
 
 Cliffhanger.prototype.invoke = function (callback) {
     var cookie = Monotonic.toString(this._cookie = Monotonic.increment(this._cookie))
-    this._magazine.hold(cookie, { callback: callback }).release()
+    this._magazine.hold(cookie, { cookie: cookie, callback: callback }).release()
     return cookie
 }
 
@@ -29,6 +29,20 @@ Cliffhanger.prototype.expire = function (expired) {
         purge.next()
     }
     purge.release()
+}
+
+Cliffhanger.prototype.cancel = function (condition) {
+    var purge = this._magazine.purge()
+    while (purge.cartridge) {
+        if (condition(purge.cartridge.value.cookie)) {
+            var error = interrupt(new Error('cancelled'))
+            purge.cartridge.value.callback.call(null, error)
+            purge.cartridge.remove()
+        } else {
+            purge.cartridge.release()
+        }
+        purge.next()
+    }
 }
 
 module.exports = Cliffhanger

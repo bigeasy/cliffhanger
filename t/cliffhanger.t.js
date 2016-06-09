@@ -1,4 +1,4 @@
-require('proof')(2, prove)
+require('proof')(4, prove)
 
 function prove (assert) {
     var Cache = require('magazine')
@@ -14,4 +14,15 @@ function prove (assert) {
         assert(error.message, 'expired', 'timed out')
     })
     cliffhanger.expire(1)
+    var cookies = []
+    cookies[0] = cliffhanger.invoke(function (error, result) {
+        assert(error.message, 'cancelled', 'cancelled')
+    })
+    cookies[1] = cliffhanger.invoke(function (error, result) {
+        assert(result, 1, 'perserved')
+    })
+    cliffhanger.cancel(function (cookie) {
+        return cookies[0] == cookie
+    })
+    cliffhanger.resolve(cookies[1], [ null, 1 ])
 }
