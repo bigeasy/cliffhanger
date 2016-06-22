@@ -2,7 +2,9 @@
     "name":                 "cliffhanger",
     "version":              "1.1.1",
     "description":
+
         "A continuation system for converting queued events into error-first callback functions.",
+
     "keywords":
     [
                             "queue", "events", "callback", "control", "flow",
@@ -20,14 +22,14 @@
     },
     "dependencies":
     {
-                            "cadence":              "1.x",
-                            "interrupt":            "1.x",
-                            "magazine":             "1.x",
-                            "monotonic":            "1.x"
+                            "cadence":                      "1.x",
+                            "interrupt":                    "1.x",
+                            "magazine":                     "1.x",
+                            "monotonic":                    "1.x"
     },
     "devDependencies":
     {
-                            "proof":                "1.x"
+                            "proof":                        "1.x"
     },
     "main":                 "cliffhanger",
     "scripts":
