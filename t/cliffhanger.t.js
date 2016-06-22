@@ -11,12 +11,12 @@ function prove (assert) {
     })
     cliffhanger.resolve(cookie, [ null, 1 ])
     cliffhanger.invoke(function (error, result) {
-        assert(error.message, 'expired', 'timed out')
+        assert(error.interrupt, 'bigeasy.cliffhanger#expired', 'timed out')
     })
     cliffhanger.expire(1)
     var cookies = []
     cookies[0] = cliffhanger.invoke(function (error, result) {
-        assert(error.message, 'cancelled', 'cancelled')
+        assert(error.interrupt, 'bigeasy.cliffhanger#canceled', 'canceled')
     })
     cookies[1] = cliffhanger.invoke(function (error, result) {
         assert(result, 1, 'perserved')

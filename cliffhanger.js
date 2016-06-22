@@ -27,8 +27,15 @@ Cliffhanger.prototype.resolve = function (cookie, vargs) {
 Cliffhanger.prototype.expire = function (expired) {
     var purge = this._magazine.purge()
     while (purge.cartridge && purge.cartridge.when < expired) {
-        var error = interrupt(new Error('expired'))
-        purge.cartridge.value.callback.call(null, error)
+        purge.cartridge.value.callback.call(null, interrupt({
+            name: 'expired',
+            context: {
+                key: purge.cartridge.key
+            },
+            properties: {
+                value: purge.cartridge.value
+            }
+        }))
         purge.cartridge.remove()
         purge.next()
     }
@@ -39,8 +46,15 @@ Cliffhanger.prototype.cancel = function (condition) {
     var purge = this._magazine.purge()
     while (purge.cartridge) {
         if (condition(purge.cartridge.value.cookie)) {
-            var error = interrupt(new Error('cancelled'))
-            purge.cartridge.value.callback.call(null, error)
+            purge.cartridge.value.callback.call(null, interrupt({
+                name: 'canceled',
+                context: {
+                    key: purge.cartridge.key
+                },
+                properties: {
+                    value: purge.cartridge.value
+                }
+            }))
             purge.cartridge.remove()
         } else {
             purge.cartridge.release()

@@ -23,7 +23,7 @@
     "dependencies":
     {
                             "cadence":                      "1.x",
-                            "interrupt":                    "1.x",
+                            "interrupt":                    "2.1.x",
                             "magazine":                     "1.x",
                             "monotonic":                    "1.x"
     },
