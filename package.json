@@ -24,7 +24,7 @@
                             "cadence":                      "1.0.x",
                             "interrupt":                    "2.1.x",
                             "magazine":                     "1.0.x",
-                            "monotonic":                    "1.0.x"
+                            "monotonic":                    "2.0.x"
     },
     "devDependencies":
     {
