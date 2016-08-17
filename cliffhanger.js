@@ -30,10 +30,10 @@ Cliffhanger.prototype.expire = function (expired) {
         purge.cartridge.value.callback.call(null, interrupt({
             name: 'expired',
             context: {
-                key: purge.cartridge.key
+                cookie: purge.cartridge.value.cookie
             },
             properties: {
-                value: purge.cartridge.value
+                callback: purge.cartridge.value.callback
             }
         }))
         purge.cartridge.remove()
@@ -49,10 +49,10 @@ Cliffhanger.prototype.cancel = function (condition) {
             purge.cartridge.value.callback.call(null, interrupt({
                 name: 'canceled',
                 context: {
-                    key: purge.cartridge.key
+                    cookie: purge.cartridge.value.cookie
                 },
                 properties: {
-                    value: purge.cartridge.value
+                    callback: purge.cartridge.value.callback
                 }
             }))
             purge.cartridge.remove()

@@ -21,14 +21,14 @@
     },
     "dependencies":
     {
-                            "cadence":                      "1.x",
+                            "cadence":                      "1.0.x",
                             "interrupt":                    "2.1.x",
-                            "magazine":                     "1.x",
-                            "monotonic":                    "1.x"
+                            "magazine":                     "1.0.x",
+                            "monotonic":                    "1.0.x"
     },
     "devDependencies":
     {
-                            "proof":                        "1.x"
+                            "proof":                        "1.0.x"
     },
     "main":                 "cliffhanger",
     "scripts":
