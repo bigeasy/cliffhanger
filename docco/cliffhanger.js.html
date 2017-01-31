@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>cliffhanger.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+
+    <ul class="sections">
+
+          <li id="title">
+              <div class="annotation">
+                  <h1>cliffhanger.js</h1>
+              </div>
+          </li>
+
+
+
+        <li id="section-1">
+            <div class="annotation">
+
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+
+            </div>
+
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> Cache = <span class="hljs-built_in">require</span>(<span class="hljs-string">'magazine'</span>)
+<span class="hljs-keyword">var</span> Monotonic = <span class="hljs-built_in">require</span>(<span class="hljs-string">'monotonic'</span>).asString
+<span class="hljs-keyword">var</span> interrupt = <span class="hljs-built_in">require</span>(<span class="hljs-string">'interrupt'</span>).createInterrupter(<span class="hljs-string">'bigeasy.cliffhanger'</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Cliffhanger</span> (<span class="hljs-params">cache</span>) </span>{
+    cache = cache || <span class="hljs-keyword">new</span> Cache
+    <span class="hljs-keyword">this</span>._magazine = cache.createMagazine()
+    <span class="hljs-keyword">this</span>._cookie = <span class="hljs-string">'0'</span>
+}
+
+Cliffhanger.prototype.invoke = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">callback</span>) </span>{
+    <span class="hljs-keyword">var</span> cookie = <span class="hljs-keyword">this</span>._cookie = Monotonic.increment(<span class="hljs-keyword">this</span>._cookie, <span class="hljs-number">0</span>)
+    <span class="hljs-keyword">this</span>._magazine.hold(cookie, { <span class="hljs-attr">cookie</span>: cookie, <span class="hljs-attr">callback</span>: callback }).release()
+    <span class="hljs-keyword">return</span> cookie
+}
+
+Cliffhanger.prototype.resolve = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">cookie, vargs</span>) </span>{
+    <span class="hljs-keyword">var</span> cartridge = <span class="hljs-keyword">this</span>._magazine.hold(cookie, <span class="hljs-literal">null</span>), outcome = <span class="hljs-literal">false</span>
+    <span class="hljs-keyword">if</span> (cartridge.value != <span class="hljs-literal">null</span>) {
+        cartridge.value.callback.apply(<span class="hljs-literal">null</span>, vargs)
+        outcome = <span class="hljs-literal">true</span>
+    }
+    cartridge.remove()
+    <span class="hljs-keyword">return</span> outcome
+}
+
+Cliffhanger.prototype.expire = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">expired</span>) </span>{
+    <span class="hljs-keyword">var</span> purge = <span class="hljs-keyword">this</span>._magazine.purge()
+    <span class="hljs-keyword">while</span> (purge.cartridge &amp;&amp; purge.cartridge.when &lt; expired) {
+        purge.cartridge.value.callback.call(<span class="hljs-literal">null</span>, interrupt({
+            <span class="hljs-attr">name</span>: <span class="hljs-string">'expired'</span>,
+            <span class="hljs-attr">context</span>: {
+                <span class="hljs-attr">cookie</span>: purge.cartridge.value.cookie
+            },
+            <span class="hljs-attr">properties</span>: {
+                <span class="hljs-attr">callback</span>: purge.cartridge.value.callback
+            }
+        }))
+        purge.cartridge.remove()
+        purge.next()
+    }
+    purge.release()
+}
+
+Cliffhanger.prototype.cancel = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">condition</span>) </span>{
+    <span class="hljs-keyword">var</span> purge = <span class="hljs-keyword">this</span>._magazine.purge()
+    <span class="hljs-keyword">while</span> (purge.cartridge) {
+        <span class="hljs-keyword">if</span> (condition(purge.cartridge.value.cookie)) {
+            purge.cartridge.value.callback.call(<span class="hljs-literal">null</span>, interrupt({
+                <span class="hljs-attr">name</span>: <span class="hljs-string">'canceled'</span>,
+                <span class="hljs-attr">context</span>: {
+                    <span class="hljs-attr">cookie</span>: purge.cartridge.value.cookie
+                },
+                <span class="hljs-attr">properties</span>: {
+                    <span class="hljs-attr">callback</span>: purge.cartridge.value.callback
+                }
+            }))
+            purge.cartridge.remove()
+        } <span class="hljs-keyword">else</span> {
+            purge.cartridge.release()
+        }
+        purge.next()
+    }
+}
+
+<span class="hljs-built_in">module</span>.exports = Cliffhanger
+
+</pre></div></div>
+
+        </li>
+
+    </ul>
+  </div>
+</body>
+</html>
