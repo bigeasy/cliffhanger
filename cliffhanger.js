@@ -22,7 +22,7 @@ function Cliffhanger (cache) {
 //
 Cliffhanger.prototype.invoke = function (callback) {
     var cookie = this._cookie = Monotonic.increment(this._cookie, 0)
-    this._magazine.hold(cookie, { cookie: cookie, callback: callback }).release()
+    this._magazine.put(cookie, { cookie: cookie, callback: callback })
     return cookie
 }
 
@@ -31,12 +31,12 @@ Cliffhanger.prototype.invoke = function (callback) {
 
 //
 Cliffhanger.prototype.resolve = function (cookie, vargs) {
-    var cartridge = this._magazine.hold(cookie, null), outcome = false
-    if (cartridge.value != null) {
-        cartridge.value.callback.apply(null, vargs)
+    var invocation = this._magazine.get(cookie), outcome = false
+    if (invocation != null) {
+        invocation.callback.apply(null, vargs)
+        this._magazine.remove(cookie)
         outcome = true
     }
-    cartridge.remove()
     return outcome
 }
 
