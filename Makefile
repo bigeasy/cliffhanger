@@ -97,7 +97,7 @@ index.html: index.md
 	    node node_modules/.bin/edify highlight --select '.lang-javascript' --language 'javascript') < $< > $@
 
 clean:
-	rm -f $(outputs)
+	rm -f $(outputs) docco/*.html
 
 serve: node_modules/.bin/serve
 	node_modules/.bin/serve --no-less --port 4000
