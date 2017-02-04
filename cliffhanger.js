@@ -26,7 +26,7 @@ Cliffhanger.prototype.invoke = function (callback) {
     return cookie
 }
 
-// Invoke the callback fro the given cookie with the given arguments. The
+// Invoke the callback from the given cookie with the given arguments. The
 // arguments are an array of arguments given to apply.
 
 //
@@ -42,7 +42,7 @@ Cliffhanger.prototype.resolve = function (cookie, vargs) {
 
 // Expire any callbacks that have been in the cache since before the given
 // expiration time. The error is the optional error to pass to the callback,
-// otherwise an error is created by the Cliffhanger.
+// otherwise an error is a coded Interrupt error created by the Cliffhanger.
 
 //
 Cliffhanger.prototype.expire = function (expired, error) {
@@ -55,8 +55,9 @@ Cliffhanger.prototype.expire = function (expired, error) {
     purge.release()
 }
 
-// TODO Dubious. Never used it. Maybe rename to `cancelIf` and move it out of
-// the way? Shouldn't the caller have a copy of all their cookies?
+// TODO Cancel with conditions is Dubious. If ever I need to cancel just a
+// subset, I'm pretty sure I'd group them by Cliffhanger, or else create a
+// custom Cliffhanger-like cache.
 
 // Cancel all callbacks that match the given condition.
 
@@ -87,4 +88,5 @@ Cliffhanger.prototype.cancel = function (condition, error) {
     }
 }
 
+// Export as constructor.
 module.exports = Cliffhanger
