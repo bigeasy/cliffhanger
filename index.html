@@ -13,7 +13,26 @@
       <h1>Cliffhanger</h1>
       <!-- todo: code font is too small for body text font-->
     </div>
-    <div class="unit description markdown include" data-file="index.md"><p>Cliffhanger</p>
+    <div class="unit description markdown include" data-file="index.md"><p>Synopsis</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> Cliffhanger = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;cliffhanger&apos;</span>)
+
+
+<span class="hljs-keyword">var</span> cookie = cliffhanger.invoke(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">error, value</span>) </span>{
+    <span class="hljs-keyword">if</span> (error) <span class="hljs-keyword">throw</span> error
+    <span class="hljs-built_in">console</span>.log(value)
+})
+
+cliffhanger.resolve(cookie, [ <span class="hljs-literal">null</span>, <span class="hljs-number">1</span> ])
+</code></pre>
+<p>Cliffhanger is used when we want our dear user to wait for a response that
+crosses a serialization boundary, like a socket. We&apos;re not able to pass a
+callback across the socket, but we can pass a cookie with the request. We can
+then use a cookie provided with a response to invoke the callback given to us by
+our dear user.</p>
+<p>I&apos;ve gone and said that Cliffhanger is a utility for continuations, which it is
+somewhat in the sense that it allows you to take a serialized response and reify
+it into an asynchronous function return; an invocation of an error-first
+callback.</p>
 </div>
   </div>
   <!-- todo: move into an edify plugin-->

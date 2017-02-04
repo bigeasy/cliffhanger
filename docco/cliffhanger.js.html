@@ -145,7 +145,7 @@ which to create a magazine.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
-              <p>Invoke the callback fro the given cookie with the given arguments. The
+              <p>Invoke the callback from the given cookie with the given arguments. The
 arguments are an array of arguments given to apply.</p>
 
             </div>
@@ -185,7 +185,7 @@ arguments are an array of arguments given to apply.</p>
               </div>
               <p>Expire any callbacks that have been in the cache since before the given
 expiration time. The error is the optional error to pass to the callback,
-otherwise an error is created by the Cliffhanger.</p>
+otherwise an error is a coded Interrupt error created by the Cliffhanger.</p>
 
             </div>
 
@@ -222,8 +222,9 @@ otherwise an error is created by the Cliffhanger.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-12">&#182;</a>
               </div>
-              <p>TODO Dubious. Never used it. Maybe rename to <code>cancelIf</code> and move it out of
-the way? Shouldn’t the caller have a copy of all their cookies?</p>
+              <p>TODO Cancel with conditions is Dubious. If ever I need to cancel just a
+subset, I’m pretty sure I’d group them by Cliffhanger, or else create a
+custom Cliffhanger-like cache.</p>
 
             </div>
 
@@ -300,7 +301,22 @@ why not just create a Magazine for yourself?</p>
     }
 }
 
-<span class="hljs-built_in">module</span>.exports = Cliffhanger
+</pre></div></div>
+
+        </li>
+
+
+        <li id="section-17">
+            <div class="annotation">
+
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>Export as constructor.</p>
+
+            </div>
+
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">module</span>.exports = Cliffhanger
 
 </pre></div></div>
 
