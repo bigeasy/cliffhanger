@@ -46,7 +46,11 @@ SHELL := env PATH=$(PATH) /bin/sh
 javascript := $(filter-out ../_%, $(wildcard ../*.js))
 sources := $(patsubst ../%.js,source/%.js.js,$(javascript))
 docco := $(patsubst source/%.js.js,docco/%.js.html,$(sources))
-outputs := $(docco) css/style.css index.html docco/index.html
+pages :=
+ifneq (,$(docco))
+pages += docco/index.html
+endif
+outputs := $(docco) css/style.css index.html $(pages)
 
 all: $(outputs)
 
@@ -127,8 +131,10 @@ $(docco): $(sources) node_modules/.bin/docco
 
 index.html: index.md
 
+ifneq (,$(docco))
 docco/index.html: docco.pug $(docco)
 	node node_modules/.bin/edify pug $$(node_modules/.bin/edify ls docco) < $< > $@
+endif
 
 %.html: pages/%.pug node_modules/.bin/edify
 	@echo generating $@
@@ -138,9 +144,47 @@ docco/index.html: docco.pug $(docco)
 	    node node_modules/.bin/edify highlight --select '.lang-javascript' --language 'javascript') < $< > $@
 
 clean:
-	rm -f $(outputs) docco/*.html
+	rm -f $(outputs) $(pages) docco/*.html
 
 serve: node_modules/.bin/serve all
 	node_modules/.bin/serve --no-less --port 4000
+
+tracking-specific:
+	@ \
+	pwd=$$(pwd); \
+	if [ -e "$$pwd"/.gitmodules ]; then \
+		IFS='=' read -a pair <<< "$$( \
+			git config -f "$$pwd"/.gitmodules -l | \
+				sed -n 's/submodule\.\(.*\)\.branch/\1/p' | \
+				tail -n 1 \
+		)"; \
+		make -C "$${pair[0]}" tracking-specific; \
+	fi; \
+	dir=$$(cd .. && pwd); \
+	path=$$(basename $$(pwd)); \
+	while ! [ -e "$$dir"/.gitmodules ]; do \
+		path=$$(basename "$$dir")/$$path; \
+		dir=$$(cd "$$dir" && cd .. && pwd); \
+	done; \
+	branch=$$(git config -f "$$dir"/.gitmodules submodule.$$path.branch); \
+	[ -z "$$branch" ] && echo no branch && exit 1; \
+	echo git checkout $$branch;
+
+tracking: tracking-specific
+	@ pwd=$$(pwd); \
+	dir=$$(cd .. && pwd); \
+	path=$$(basename $$(pwd)); \
+	while ! [ -e "$$dir"/.gitmodules ]; do \
+		path=$$(basename "$$dir")/$$path; \
+		dir=$$(cd "$$dir" && cd .. && pwd); \
+	done; \
+	git config -f ../.gitmodules -l | \
+		sed -n 's/submodule\.\(.*\)\.branch/\1/p' | \
+    while read -r line; do \
+		IFS='=' read -a pair <<< "$$line"; \
+		if [ "$$dir"/"$${pair[0]}" != "$$pwd" ]; then \
+			echo make -C "$$dir"/"$${pair[0]}" tracking-specific; \
+		fi \
+	done
 
 .INTERMEDIATE: $(sources)
