@@ -153,12 +153,15 @@ tracking-specific:
 	@ \
 	pwd=$$(pwd); \
 	if [ -e "$$pwd"/.gitmodules ]; then \
-		IFS='=' read -a pair <<< "$$( \
+		tail=$$( \
 			git config -f "$$pwd"/.gitmodules -l | \
 				sed -n 's/submodule\.\(.*\)\.branch/\1/p' | \
 				tail -n 1 \
-		)"; \
-		make -C "$${pair[0]}" tracking-specific; \
+		); \
+		if [ ! -z "$$tail" ]; then \
+			IFS='=' read -a pair <<< "$$tail"; \
+			make -C "$${pair[0]}" tracking-specific; \
+		fi; \
 	fi; \
 	dir=$$(cd .. && pwd); \
 	path=$$(basename $$(pwd)); \
@@ -168,7 +171,7 @@ tracking-specific:
 	done; \
 	branch=$$(git config -f "$$dir"/.gitmodules submodule.$$path.branch); \
 	[ -z "$$branch" ] && echo no branch && exit 1; \
-	echo git checkout $$branch;
+	git checkout $$branch;
 
 tracking: tracking-specific
 	@ pwd=$$(pwd); \
