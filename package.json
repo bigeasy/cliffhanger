@@ -1,6 +1,6 @@
 {
     "name":                 "cliffhanger",
-    "version":              "1.3.2",
+    "version":              "1.4.0",
     "description":
 
         "A continuation system for converting queued events into error-first callback functions.",
