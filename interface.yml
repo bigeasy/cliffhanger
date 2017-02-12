@@ -1,10 +1,9 @@
 title: Cliffhanger
 interface:
-  - method: new Cliffhanger()
-  - arguments: []
-  - description: |
-      Markdown *allowed*.
-
-      New lines are not horribly indented.
-
-      Worked out quite nicely. Works well in `vim`. Might want a modeline.
+  - source: new Cliffhanger()
+    arguments: {}
+    description: |
+      Constructs a new `Cliffhanger` object. No arguments.
+  - source: cliffhanger.invoke(callback)
+    arguments:
+      callback: A callback.
