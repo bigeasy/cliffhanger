@@ -7,8 +7,8 @@
 
     "keywords":
     [
-                            "queue", "events", "callback", "control", "flow",
-                            "cadence"
+                            "cadence", "queue", "events", "callback", "control",
+                            "flow"
     ],
     "author":               "Alan Gutierrez <alan@prettyrobots.com>",
     "homepage":             "https://github.com/bigeasy/cliffhanger",
