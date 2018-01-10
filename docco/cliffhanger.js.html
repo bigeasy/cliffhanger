@@ -31,7 +31,9 @@
 
             </div>
 
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> Cache = <span class="hljs-built_in">require</span>(<span class="hljs-string">'magazine'</span>)</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> Cache = <span class="hljs-built_in">require</span>(<span class="hljs-string">'magazine'</span>)
+
+</pre></div></div>
 
         </li>
 
@@ -46,7 +48,9 @@
 
             </div>
 
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> Monotonic = <span class="hljs-built_in">require</span>(<span class="hljs-string">'monotonic'</span>).asString</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> Monotonic = <span class="hljs-built_in">require</span>(<span class="hljs-string">'monotonic'</span>).asString
+
+</pre></div></div>
 
         </li>
 
@@ -61,7 +65,9 @@
 
             </div>
 
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> interrupt = <span class="hljs-built_in">require</span>(<span class="hljs-string">'interrupt'</span>).createInterrupter(<span class="hljs-string">'bigeasy.cliffhanger'</span>)</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> interrupt = <span class="hljs-built_in">require</span>(<span class="hljs-string">'interrupt'</span>).createInterrupter(<span class="hljs-string">'bigeasy.cliffhanger'</span>)
+
+</pre></div></div>
 
         </li>
 
@@ -93,7 +99,9 @@ which to create a magazine.</p>
     cache = cache || <span class="hljs-keyword">new</span> Cache
     <span class="hljs-keyword">this</span>._magazine = cache.createMagazine()
     <span class="hljs-keyword">this</span>._cookie = <span class="hljs-string">'0'</span>
-}</pre></div></div>
+}
+
+</pre></div></div>
 
         </li>
 
@@ -124,7 +132,9 @@ which to create a magazine.</p>
     <span class="hljs-keyword">var</span> cookie = <span class="hljs-keyword">this</span>._cookie = Monotonic.increment(<span class="hljs-keyword">this</span>._cookie, <span class="hljs-number">0</span>)
     <span class="hljs-keyword">this</span>._magazine.put(cookie, { <span class="hljs-attr">cookie</span>: cookie, <span class="hljs-attr">callback</span>: callback })
     <span class="hljs-keyword">return</span> cookie
-}</pre></div></div>
+}
+
+</pre></div></div>
 
         </li>
 
@@ -160,7 +170,9 @@ arguments are an array of arguments given to apply.</p>
         outcome = <span class="hljs-literal">true</span>
     }
     <span class="hljs-keyword">return</span> outcome
-}</pre></div></div>
+}
+
+</pre></div></div>
 
         </li>
 
@@ -192,12 +204,14 @@ otherwise an error is a coded Interrupt error created by the Cliffhanger.</p>
             <div class="content"><div class='highlight'><pre>Cliffhanger.prototype.expire = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">expired, error</span>) </span>{
     <span class="hljs-keyword">var</span> purge = <span class="hljs-keyword">this</span>._magazine.purge()
     <span class="hljs-keyword">while</span> (purge.cartridge &amp;&amp; purge.cartridge.when &lt; expired) {
-        purge.cartridge.value.callback.call(<span class="hljs-literal">null</span>, error || interrupt({ <span class="hljs-attr">name</span>: <span class="hljs-string">'expired'</span> }))
+        purge.cartridge.value.callback.call(<span class="hljs-literal">null</span>, error || interrupt(<span class="hljs-string">'expired'</span>))
         purge.cartridge.remove()
         purge.next()
     }
     purge.release()
-}</pre></div></div>
+}
+
+</pre></div></div>
 
         </li>
 
@@ -278,14 +292,16 @@ why not just create a Magazine for yourself?</p>
     <span class="hljs-keyword">var</span> purge = <span class="hljs-keyword">this</span>._magazine.purge()
     <span class="hljs-keyword">while</span> (purge.cartridge) {
         <span class="hljs-keyword">if</span> (condition(purge.cartridge.value.cookie)) {
-            purge.cartridge.value.callback.call(<span class="hljs-literal">null</span>, error || interrupt({ <span class="hljs-attr">name</span>: <span class="hljs-string">'canceled'</span> }))
+            purge.cartridge.value.callback.call(<span class="hljs-literal">null</span>, error || interrupt(<span class="hljs-string">'canceled'</span>))
             purge.cartridge.remove()
         } <span class="hljs-keyword">else</span> {
             purge.cartridge.release()
         }
         purge.next()
     }
-}</pre></div></div>
+}
+
+</pre></div></div>
 
         </li>
 
@@ -300,7 +316,9 @@ why not just create a Magazine for yourself?</p>
 
             </div>
 
-            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">module</span>.exports = Cliffhanger</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">module</span>.exports = Cliffhanger
+
+</pre></div></div>
 
         </li>
 
