@@ -5,7 +5,7 @@ var Cache = require('magazine')
 var Monotonic = require('monotonic').asString
 
 // Exceptions with context that can be caught by type.
-var interrupt = require('interrupt').createInterrupter('bigeasy.cliffhanger')
+var Interrupt = require('interrupt').createInterrupter('bigeasy.cliffhanger')
 
 // Create a Cliffhanger. The optional `cache` argument is a common cache from
 // which to create a magazine.
@@ -48,7 +48,7 @@ Cliffhanger.prototype.resolve = function (cookie, vargs) {
 Cliffhanger.prototype.expire = function (expired, error) {
     var purge = this._magazine.purge()
     while (purge.cartridge && purge.cartridge.when < expired) {
-        purge.cartridge.value.callback.call(null, error || interrupt('expired'))
+        purge.cartridge.value.callback.call(null, error || new Interrupt('expired'))
         purge.cartridge.remove()
         purge.next()
     }
@@ -79,7 +79,7 @@ Cliffhanger.prototype.cancel = function (condition, error) {
     var purge = this._magazine.purge()
     while (purge.cartridge) {
         if (condition(purge.cartridge.value.cookie)) {
-            purge.cartridge.value.callback.call(null, error || interrupt('canceled'))
+            purge.cartridge.value.callback.call(null, error || new Interrupt('canceled'))
             purge.cartridge.remove()
         } else {
             purge.cartridge.release()
