@@ -1,4 +1,4 @@
-require('proof')(9, prove)
+require('proof')(10, prove)
 
 function prove (okay) {
     var Cache = require('magazine')
@@ -27,12 +27,14 @@ function prove (okay) {
     cookies[1] = cliffhanger.invoke(function (error, result) {
         okay(result, 1, 'perserved')
     })
-    cookies[2] = cliffhanger.invoke(function (error, result) {})
+    cookies[2] = cliffhanger.invoke(function (error, result) {
+        okay(result, 2, 'cancel with value')
+    })
     cliffhanger.cancel(function (cookie) {
         return cookies[0] == cookie
     })
     okay(!cliffhanger.resolve(cookies[0], [ null, 1 ]), 'missed')
     okay(cliffhanger.resolve(cookies[1], [ null, 1 ]), 'hit')
-    cliffhanger.cancel()
+    cliffhanger.cancel([ null, 2 ])
     okay(!cliffhanger.resolve(cookies[2], [ null, 1 ]), 'unconditional cancel')
 }

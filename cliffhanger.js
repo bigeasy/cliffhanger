@@ -78,11 +78,14 @@ Cliffhanger.prototype.cancel = function (condition, error) {
     } else {
         condition = function () { return true }
     }
-    error = vargs.shift()
+    vargs = vargs.shift()
+    if (!Array.isArray(vargs)) {
+        vargs = [ vargs || new Interrupt('canceled') ]
+    }
     var purge = this._magazine.purge()
     while (purge.cartridge) {
         if (condition(purge.cartridge.value.cookie)) {
-            purge.cartridge.value.callback.call(null, error || new Interrupt('canceled'))
+            purge.cartridge.value.callback.apply(null,vargs)
             purge.cartridge.remove()
         } else {
             purge.cartridge.release()
