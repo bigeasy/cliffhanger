@@ -45,10 +45,13 @@ Cliffhanger.prototype.resolve = function (cookie, vargs) {
 // otherwise an error is a coded Interrupt error created by the Cliffhanger.
 
 //
-Cliffhanger.prototype.expire = function (expired, error) {
+Cliffhanger.prototype.expire = function (expired, vargs) {
     var purge = this._magazine.purge()
     while (purge.cartridge && purge.cartridge.when < expired) {
-        purge.cartridge.value.callback.call(null, error || new Interrupt('expired'))
+        if (!Array.isArray(vargs)) {
+            vargs = [ vargs || new Interrupt('expired') ]
+        }
+        purge.cartridge.value.callback.apply(null, vargs)
         purge.cartridge.remove()
         purge.next()
     }
