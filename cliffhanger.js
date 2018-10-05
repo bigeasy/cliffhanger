@@ -58,38 +58,14 @@ Cliffhanger.prototype.expire = function (expired, vargs) {
     purge.release()
 }
 
-// TODO Cancel with conditions is Dubious. If ever I need to cancel just a
-// subset, I'm pretty sure I'd group them by Cliffhanger, or else create a
-// custom Cliffhanger-like cache.
-
-// Cancel all callbacks that match the given condition.
-
-// The condition is really dubious. If you're going to test based on a cookie,
-// then you're going to have to keep information associated with the cookie, so
-// why not just create a Magazine for yourself?
-
-// It is outgoing, but I'm going to keep it in case I'm using it somewhere.
-
-//
-Cliffhanger.prototype.cancel = function (condition, error) {
-    var vargs = Array.prototype.slice.call(arguments)
-    if (typeof vargs[0] == 'function') {
-        condition = vargs.shift()
-    } else {
-        condition = function () { return true }
-    }
-    vargs = vargs.shift()
+Cliffhanger.prototype.cancel = function (vargs) {
     if (!Array.isArray(vargs)) {
         vargs = [ vargs || new Interrupt('canceled') ]
     }
     var purge = this._magazine.purge()
     while (purge.cartridge) {
-        if (condition(purge.cartridge.value.cookie)) {
-            purge.cartridge.value.callback.apply(null,vargs)
-            purge.cartridge.remove()
-        } else {
-            purge.cartridge.release()
-        }
+        purge.cartridge.value.callback.apply(null,vargs)
+        purge.cartridge.remove()
         purge.next()
     }
 }

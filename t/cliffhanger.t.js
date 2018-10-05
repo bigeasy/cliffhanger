@@ -22,19 +22,17 @@ function prove (okay) {
     cliffhanger.expire(1, [ null, 404 ])
     var cookies = []
     cookies[0] = cliffhanger.invoke(function (error, result) {
-        okay(error.qualified, 'bigeasy.cliffhanger#canceled', 'canceled')
+        okay(error.qualified, 'bigeasy.cliffhanger#canceled', 'cancel')
     })
+    cliffhanger.cancel()
+    okay(!cliffhanger.resolve(cookies[0], [ null, 1 ]), 'canceled')
     cookies[1] = cliffhanger.invoke(function (error, result) {
         okay(result, 1, 'perserved')
     })
     cookies[2] = cliffhanger.invoke(function (error, result) {
         okay(result, 2, 'cancel with value')
     })
-    cliffhanger.cancel(function (cookie) {
-        return cookies[0] == cookie
-    })
-    okay(!cliffhanger.resolve(cookies[0], [ null, 1 ]), 'missed')
     okay(cliffhanger.resolve(cookies[1], [ null, 1 ]), 'hit')
     cliffhanger.cancel([ null, 2 ])
-    okay(!cliffhanger.resolve(cookies[2], [ null, 1 ]), 'unconditional cancel')
+    okay(!cliffhanger.resolve(cookies[2], [ null, 1 ]), 'canceled with value')
 }
