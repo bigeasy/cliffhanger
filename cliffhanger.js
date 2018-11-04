@@ -5,7 +5,7 @@ var Cache = require('magazine')
 var Monotonic = require('monotonic').asString
 
 // Exceptions with context that can be caught by type.
-var Interrupt = require('interrupt').createInterrupter('bigeasy.cliffhanger')
+var Interrupt = require('interrupt').createInterrupter('cliffhanger')
 
 // Create a Cliffhanger. The optional `cache` argument is a common cache from
 // which to create a magazine.
