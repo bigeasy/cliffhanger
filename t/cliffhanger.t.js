@@ -11,7 +11,7 @@ function prove (okay) {
     })
     cliffhanger.resolve(cookie, [ null, 1 ])
     cliffhanger.invoke(function (error, result) {
-        okay(error.qualified, 'bigeasy.cliffhanger#expired', 'timed out')
+        okay(error.qualified, 'cliffhanger#expired', 'timed out')
     })
     cliffhanger.expire(1)
     cliffhanger.resolve(cookie, [ null, 1 ])
@@ -22,7 +22,7 @@ function prove (okay) {
     cliffhanger.expire(1, [ null, 404 ])
     var cookies = []
     cookies[0] = cliffhanger.invoke(function (error, result) {
-        okay(error.qualified, 'bigeasy.cliffhanger#canceled', 'cancel')
+        okay(error.qualified, 'cliffhanger#canceled', 'cancel')
     })
     cliffhanger.cancel()
     okay(!cliffhanger.resolve(cookies[0], [ null, 1 ]), 'canceled')
