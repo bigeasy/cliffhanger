@@ -3,7 +3,7 @@
     "version":              "3.0.2",
     "description":
 
-        "A continuation system for converting queued events into error-first callback functions.",
+        "A continuation system for converting queued events into Promises.",
 
     "keywords":
     [
