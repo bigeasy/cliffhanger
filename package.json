@@ -28,11 +28,11 @@
     },
     "devDependencies":
     {
-                            "proof":                        "7.0.x"
+                            "proof":                        "^9.0.3"
     },
     "main":                 "cliffhanger",
     "scripts":
     {
-                            "test": "proof test test/*.t.js"
+                            "test": "proof test/*.t.js"
     }
 }
